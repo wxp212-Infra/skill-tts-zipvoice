@@ -3,7 +3,7 @@
 # TTS语音生成脚本 - 使用ZipVoice零样本中英文模型
 #
 # 用法:
-#   ./generate_speech_zipvoice.sh "要转换的文本" [输出文件名] [参考音频] [参考文本]
+#   ./tts_zipvoice.sh "要转换的文本" [输出文件名] [参考音频] [参考文本]
 #
 # 参数说明:
 #   $1 - 要转换的文本（必须）
@@ -12,9 +12,9 @@
 #   $4 - 参考音频对应文本（可选）
 #
 # 示例:
-#   ./generate_speech_zipvoice.sh "你好，世界"
-#   ./generate_speech_zipvoice.sh "你好，世界" ./output.wav
-#   ./generate_speech_zipvoice.sh "你好" ./out.wav ./my_voice.wav "这是我的声音"
+#   ./tts_zipvoice.sh "你好，世界"
+#   ./tts_zipvoice.sh "你好，世界" ./output.wav
+#   ./tts_zipvoice.sh "你好" ./out.wav ./my_voice.wav "这是我的声音"
 #
 
 # 检查参数
@@ -34,7 +34,7 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 设置模型路径
-MODEL_DIR="$SCRIPT_DIR/sherpa-onnx-zipvoice-distill-zh-en-emilia"
+MODEL_DIR="$SCRIPT_DIR/../model/sherpa-onnx-zipvoice-distill-zh-en-emilia"
 ENCODER="$MODEL_DIR/text_encoder.onnx"
 DECODER="$MODEL_DIR/fm_decoder.onnx"
 VOCODER="$MODEL_DIR/vocos_24khz.onnx"
@@ -43,8 +43,8 @@ LEXICON="$MODEL_DIR/lexicon.txt"
 DATA_DIR="$MODEL_DIR/espeak-ng-data"
 BINARY="$SCRIPT_DIR/sherpa-onnx-offline-zeroshot-tts"
 
-# 默认参考音频（林志玲声音）
-DEFAULT_PROMPT_AUDIO="$SCRIPT_DIR/temple/linzhiling_combined.wav"
+# 默认参考音频（林志玲声音，8.82秒组合音频）
+DEFAULT_PROMPT_AUDIO="$SCRIPT_DIR/../template/linzhiling_combined.wav"
 DEFAULT_PROMPT_TEXT="志玲可不是花瓶，人家也是有枪法的。快来救救人家。你很厉害吗？可以带我吃鸡吗？"
 
 # 检查文件是否存在
@@ -61,7 +61,7 @@ check_files
 
 # 解析参数
 TEXT="$1"
-OUTPUT="${2:-$SCRIPT_DIR/generated_zipvoice.wav}"
+OUTPUT="${2:-$PWD/generated_zipvoice.wav}"
 PROMPT_AUDIO="${3:-$DEFAULT_PROMPT_AUDIO}"
 PROMPT_TEXT="${4:-$DEFAULT_PROMPT_TEXT}"
 
@@ -110,6 +110,6 @@ else
     echo "1. 检查模型文件是否完整"
     echo "2. 确保有足够的系统内存"
     echo "3. 尝试使用更短的文本"
-    echo "4. 检查参考音频格式（需要单声道PCM）"
+    echo "4. 检查参考音频格式（需要24kHz单声道PCM WAV）"
     exit 1
 fi
