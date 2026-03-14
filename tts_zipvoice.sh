@@ -43,9 +43,9 @@ LEXICON="$MODEL_DIR/lexicon.txt"
 DATA_DIR="$MODEL_DIR/espeak-ng-data"
 BINARY="$SCRIPT_DIR/sherpa-onnx-offline-zeroshot-tts"
 
-# 默认参考音频（雷军声音）
-DEFAULT_PROMPT_AUDIO="$SCRIPT_DIR/temple/linzhiling14.wav"
-DEFAULT_PROMPT_TEXT="你很厉害吗？可以带我吃鸡吗？"
+# 默认参考音频（林志玲声音）
+DEFAULT_PROMPT_AUDIO="$SCRIPT_DIR/temple/linzhiling_combined.wav"
+DEFAULT_PROMPT_TEXT="志玲可不是花瓶，人家也是有枪法的。快来救救人家。你很厉害吗？可以带我吃鸡吗？"
 
 # 检查文件是否存在
 check_files() {
